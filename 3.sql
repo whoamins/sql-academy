@@ -92,4 +92,15 @@ SELECT * FROM Company ORDER BY name LIMIT 2
 
 SELECT start_pair, end_pair FROM Timepair LIMIT 1,2;
 
-/*  */
+/* Выведите количество полётов каждого пассажира, представленного в таблице Passenger. Список полётов находится в таблице Pass_in_trip. В качестве результата выведите количество полётов (используйте псевдоним count) и имя пассажира. */
+
+SELECT COUNT(Pass_in_trip.id) as count, name FROM Passenger LEFT JOIN Pass_in_trip ON Passenger.id = Pass_in_trip.passenger GROUP BY Passenger.id
+
+/* Выведите названия товаров из таблицы Goods (поле good_name), которые ещё ни разу не покупались ни одним из членов семьи (таблица Payments). */
+
+SELECT Goods.good_name FROM Goods LEFT JOIN Payments ON Goods.good_id = Payments.good WHERE Payments.good is null;
+
+/* Выведите список комнат (все поля, таблица Rooms), которые по своим удобствам (has_tv, has_internet, has_kitchen, has_air_con) совпадают с комнатой с идентификатором "11". */
+
+SELECT * FROM Rooms WHERE (has_tv, has_internet, has_kitchen, has_air_con) = ( SELECT has_tv, has_internet, has_kitchen, has_air_con FROM Rooms WHERE id = 11);
+
